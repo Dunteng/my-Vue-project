@@ -41,7 +41,8 @@
 <style lang="scss" scoped>
 .app-container {
   	padding-top: 40px;
-	overflow-x: hidden;//实现路由切换动画效果之一
+    padding-bottom: 50px;
+	overflow-x: hidden;//实现路由切换动画效果步骤之一
 }
 // 实现路由切换效果
 .v-enter{
