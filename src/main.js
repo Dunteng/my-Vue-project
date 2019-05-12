@@ -20,7 +20,9 @@ Vue.filter('dataFormat',function(dataStr, pattern="YYYY-MM-DD HH:mm:ss"){
 import VueResource from 'vue-resource'
 // 2.2 安装vue resource
 Vue.use(VueResource)
-Vue.http.options.root = 'http://www.liulongbin.top:3005'//这项配置必须再Vue.use(VueResource)之后写
+Vue.http.options.root = 'http://www.liulongbin.top:3005'//这俩项配置必须再Vue.use(VueResource)之后写
+// 启用该选项后，请求会以application/x-www-form-urlencoded作为Content-Type，就像普通的HTML表单一样。
+Vue.http.options.emulateJSON = true 
 
 
 // 导入MUI的样式

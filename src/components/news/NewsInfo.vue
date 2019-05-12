@@ -12,7 +12,9 @@
         </div>
         <!-- 评论区 -->
         <div class="comment">
+            <!-- <comment-box></comment-box> -->
             <comment-box :id="this.id"></comment-box>
+            <!-- 父组件将this.$route.params.id传递给子组件comment-box -->
         </div>
     </div>
 </template>

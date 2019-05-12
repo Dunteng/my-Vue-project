@@ -2,8 +2,8 @@
     <div class="cmt-container">
         <h3>评论区:</h3>
         <hr>
-        <textarea placeholder="开始BB吧(最多BB120字)..." maxlength="120"></textarea>
-        <mt-button type="primary" size="large">发表评论</mt-button>
+        <textarea placeholder="开始BB吧(最多BB120字)..." maxlength="120" v-model="msg" @keyup.enter = "postComment"></textarea>
+        <mt-button type="primary" size="large" @click="postComment">发表评论</mt-button>
 
         <div class="cmt-list">
             <div class="cmt-item" v-for="(item, i) in commentsList" :key="i">
@@ -23,12 +23,15 @@
 <script>
 import {Toast} from "mint-ui"
 export default {
+    // 接受从父组件传来的id
     props:["id"],
+    
     data(){
         return {
             pageIndex: 1,//默认展示第一页
             lou:0,//显示多少楼层评论
-            commentsList:[]
+            commentsList:[],
+            msg:""//评论输入的内容
         }
     },
     created(){
@@ -49,6 +52,27 @@ export default {
         getMore(){
             this.pageIndex++;
             this.getComments();
+        },
+        postComment(){
+            if(this.msg.trim().length===0){
+                return Toast('评论内容不能为空！')
+            }
+            this.$http.post('api/postcomment/'+this.id,
+                            { content:this.msg.trim()}
+            ).then(function(result){
+                if(result.body.status === 0){
+                    // 1、拼接处一个评论对象
+                    var cmt = {
+                        user_name: 'OG園長',
+                        add_time: new Date(),
+                        content: this.msg.trim()
+                    };
+                    this.commentsList.unshift(cmt);
+                    this.msg = ""
+                }else {
+                    Toast("发布失败。。。")
+                }
+            })
         }
     }
 }
