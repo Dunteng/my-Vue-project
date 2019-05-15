@@ -1,14 +1,7 @@
 <template>
   <div>
     <!-- 轮播图  必须设置高度，否则显示不出来 -->
-    <mt-swipe :auto="4000">
-      <!-- 在组件中使用v-for的话一定要加上:key -->
-      <mt-swipe-item v-for="item in swipeList" :key="item.id">
-        <img :src="item.img" alt>
-      </mt-swipe-item>
-      <!-- <mt-swipe-item>2</mt-swipe-item>
-      <mt-swipe-item>3</mt-swipe-item>-->
-    </mt-swipe>
+    <shouyelunbotu :swiperList="swiperList" :isFull="true"></shouyelunbotu>
 
     <!-- 九宫格到六宫格的改造 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -25,10 +18,10 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/goodslist">
           <img src="../../images/menu3.png" alt="">
           <div class="mui-media-body">商品购买</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
@@ -54,11 +47,12 @@
 
 <script>
 import { Toast } from "mint-ui";
+import swiper from '../subcomponents/swiper.vue'
 
 export default {
   data() {
     return {
-      swipeList: [] //保存轮播图的数组
+      swiperList: [] //保存轮播图的数组
     };
   },
   created() {
@@ -71,7 +65,7 @@ export default {
         .then(result => {
           // console.log(result)
           if (result.body.status === 0) {
-            this.swipeList = result.body.message;
+            this.swiperList = result.body.message;
           } else {
             Toast({
               message: "加载失败",
@@ -81,31 +75,16 @@ export default {
           }
         });
     }
+  },
+  components:{
+    'shouyelunbotu': swiper
   }
 };
 </script>
 
 
 <style lang="scss" scoped>
-.mint-swipe {
-  height: 200px;
 
-  .mint-swipe-item {
-    &:nth-child(1) {
-      background-color: rgb(211, 98, 33);
-    }
-    &:nth-child(2) {
-      background-color: rgb(172, 211, 33);
-    }
-    &:nth-child(3) {
-      background-color: rgb(33, 211, 172);
-    }
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-};
 .mui-grid-view.mui-grid-9{
     background-color: white;
     border: none;
